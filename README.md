@@ -24,8 +24,8 @@ Let's get you caught up on what this batch is all about and what you can expect.
 
 Here's what you'll be doing :
 1. You'll start by introducing yourself to the batch and the mentors in a GitHub discussion.
-2. Next, you'll complete [Issue #1](/../../issues/1) and 'check in' to our smart contract by writing a contract of your own.
-3. After that you'll move to [Issue #2](/../../issues/2) and create a personal page and use a pull request(PR) to send it to the batch repo.
+2. Next, you'll complete [Issue #1](https://github.com/BuidlGuidl/batch0.buidlguidl.com/issues/9) and 'check in' to our smart contract by writing a contract of your own.
+3. After that you'll move to [Issue #2](https://github.com/BuidlGuidl/batch0.buidlguidl.com/issues/8) and create a personal page and use a pull request(PR) to send it to the batch repo.
 4. From there you will start choosing other open issues to work on, either on your own or in collaboration with other batch members.
 5. The final step is a full dApp chosen and created by the batch! (We will provide ideas on projects you can take on)
 
