@@ -2,8 +2,16 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContractRead";
 
 const Home: NextPage = () => {
+  const { data: checkedInCount } = useScaffoldContractRead({
+    contractName: "BatchRegistry",
+    functionName: "checkedInCounter",
+    watch: true,
+  });
+  const loadingSpinner = <span className="loading loading-spinner loading-xs" />;
+
   return (
     <>
       <MetaHeader />
@@ -16,7 +24,7 @@ const Home: NextPage = () => {
           <p className="text-center text-lg">Get started by taking a look at your batch GitHub repository.</p>
           <p className="text-lg flex gap-2 justify-center">
             <span className="font-bold">Checked in builders count:</span>
-            <span>To Be Implemented</span>
+            <span> {checkedInCount?.toString() ?? loadingSpinner}</span>
           </p>
         </div>
 
