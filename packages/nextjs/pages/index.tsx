@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     watch: true,
   });
 
-  const { data: isInallowList } = useScaffoldContractRead({
+  const { data: isInAllowList } = useScaffoldContractRead({
     contractName: "BatchRegistry",
     functionName: "allowList",
     args: [account.address],
@@ -28,6 +28,10 @@ const Home: NextPage = () => {
     args: [account.address],
     watch: true,
   });
+
+  const isZeroAddress = (address: string) => {
+    return address === "0x0000000000000000000000000000000000000000";
+  };
 
   const loadingSpinner = <span className="loading loading-spinner loading-xs" />;
 
@@ -48,13 +52,25 @@ const Home: NextPage = () => {
         </div>
 
         {/* Showing Account Status */}
-        {isInallowList !== undefined ? (
+        {isInAllowList !== undefined ? (
           <div className="text-center">
-            <p className={isInallowList ? "text-green-400" : "text-red-400"}>
-              Account status: {isInallowList ? "Allowed" : "Not allowed"}
+            <p>
+              Account status:{" "}
+              <span className={isInAllowList ? "text-green-400 font-bold" : "text-red-400 font-bold"}>
+                {isInAllowList ? "Allowed" : "Not allowed"}
+              </span>
             </p>
-            {isInallowList && (
-              <p>Check-in Status: {checkedInContract?.includes("0x0000") ? "Not Checked In" : "Checked In"}</p>
+            {isInAllowList && (
+              <p>
+                Check-in Status:{" "}
+                <span
+                  className={
+                    isZeroAddress(checkedInContract as string) ? "text-red-400 font-bold" : "text-green-400 font-bold"
+                  }
+                >
+                  {isZeroAddress(checkedInContract as string) ? "Not Checked In" : "Checked In"}
+                </span>
+              </p>
             )}
           </div>
         ) : (
