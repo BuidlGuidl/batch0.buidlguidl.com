@@ -1,15 +1,38 @@
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { Spinner } from "~~/components/assets/Spinner";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContractRead";
 
 const Home: NextPage = () => {
+  const account = useAccount();
+
   const { data: checkedInCount } = useScaffoldContractRead({
     contractName: "BatchRegistry",
     functionName: "checkedInCounter",
     watch: true,
   });
+
+  const { data: isInAllowList } = useScaffoldContractRead({
+    contractName: "BatchRegistry",
+    functionName: "allowList",
+    args: [account.address],
+    watch: true,
+  });
+
+  const { data: checkedInContract } = useScaffoldContractRead({
+    contractName: "BatchRegistry",
+    functionName: "yourContractAddress",
+    args: [account.address],
+    watch: true,
+  });
+
+  const isZeroAddress = (address: string) => {
+    return address === "0x0000000000000000000000000000000000000000";
+  };
+
   const loadingSpinner = <span className="loading loading-spinner loading-xs" />;
 
   return (
@@ -21,12 +44,37 @@ const Home: NextPage = () => {
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Batch 0</span>
           </h1>
-          <p className="text-center text-lg">Get started by taking a look at your batch GitHub repository.</p>
           <p className="text-lg flex gap-2 justify-center">
             <span className="font-bold">Checked in builders count:</span>
             <span> {checkedInCount?.toString() ?? loadingSpinner}</span>
           </p>
         </div>
+
+        {/* Showing Account Status */}
+        {isInAllowList !== undefined ? (
+          <div className="text-center">
+            <p>
+              Account status:{" "}
+              <span className={isInAllowList ? "text-green-400 font-bold" : "text-red-400 font-bold"}>
+                {isInAllowList ? "Allowed" : "Not allowed"}
+              </span>
+            </p>
+            {isInAllowList && (
+              <p>
+                Check-in Status:{" "}
+                <span
+                  className={
+                    isZeroAddress(checkedInContract as string) ? "text-red-400 font-bold" : "text-green-400 font-bold"
+                  }
+                >
+                  {isZeroAddress(checkedInContract as string) ? "Not Checked In" : "Checked In"}
+                </span>
+              </p>
+            )}
+          </div>
+        ) : (
+          <Spinner />
+        )}
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
