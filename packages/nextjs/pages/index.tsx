@@ -26,6 +26,12 @@ const Home: NextPage = () => {
             <span className="font-bold">Checked in builders count:</span>
             <span> {checkedInCount?.toString() ?? loadingSpinner}</span>
           </p>
+          <p className="text-lg flex gap-2 justify-center">
+            <Link href="./builders/Allbuilders" className="link font-bold">
+              Click Here
+            </Link>{" "}
+            to check out the personal page of each builders. {""}
+          </p>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
