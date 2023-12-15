@@ -73,7 +73,8 @@ const Home: NextPage = () => {
             )}
           </div>
         ) : (
-          <Spinner />
+          // Show the spinner only when isInAllowList is false
+          <>{isInAllowList && <Spinner />}</>
         )}
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
