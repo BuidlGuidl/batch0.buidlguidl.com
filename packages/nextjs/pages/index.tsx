@@ -73,7 +73,7 @@ const Home: NextPage = () => {
             )}
           </div>
         ) : (
-          <Spinner />
+          account.isConnected && <Spinner />
         )}
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
